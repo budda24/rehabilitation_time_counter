@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "904295600049",
+    "project_id": "expensescounter-f3fd6",
+    "storage_bucket": "expensescounter-f3fd6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:904295600049:android:2327c2e533b68c649eb790",
+        "android_client_info": {
+          "package_name": "com.franek.expenses_counter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "904295600049-mcgk2itfe3j7tl5qltu6e996fvmv711k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCczoA4rPEXL-PQeA_E881r48fiZWk_emc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "904295600049-mcgk2itfe3j7tl5qltu6e996fvmv711k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
