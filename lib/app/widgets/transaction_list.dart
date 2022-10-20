@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/const/const.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../data/transaction.dart';
 
 class TransactionList extends StatelessWidget {
   TransactionList(
-      {required this.listTransactions, required this.lfDeleteTransaction});
+      {required this.listTransactions, required this.deleteTransaction});
 
   final List<Transaction> listTransactions;
-  final Function lfDeleteTransaction;
-
-  final randomColors = [
-    Colors.black,
-    Colors.white,
-    Colors.grey,
-    Colors.green,
-    Colors.blue,
-  ];
+  final Function deleteTransaction;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
     return Container(
       /*ListView.builder needs parent with constrain height*/
-      height: height * 0.5,
+      height: 0.5.sh,
       child: listTransactions.isEmpty
           ? Center(
               child: Column(
@@ -33,15 +23,15 @@ class TransactionList extends StatelessWidget {
                   Card(
                     color: kPurpulColor,
                     child: Text(
-                      'You don\'t have expenses yet :)',
+                      'You Rehabilitation Yet :)',
                       style: kTextTitle,
                     ),
                   ),
                   SizedBox(
-                    height: height * 0.0307,
+                    height: 0.0307.sh,
                   ),
                   Container(
-                    height: height * 0.2,
+                    height: 0.2.sh,
                     child: Image.asset('assets/images/waiting.png'),
                   )
                 ],
@@ -49,22 +39,20 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemCount: listTransactions.length,
-              /*ctx = context*/
               itemBuilder: (ctx, index) {
                 return Container(
                   margin: EdgeInsets.symmetric(
-                      horizontal: height * 0.0409, vertical: width * 0.0128),
-                  /*padding: const EdgeInsets.only(top: 8.0),*/
+                      horizontal: 0.0409.sh, vertical: 0.0128.sw),
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
                         side: BorderSide(width: 3, color: kPurpulColor)),
                     leading: CircleAvatar(
                       radius: 50,
-                      backgroundColor: randomColors[index],
+                      backgroundColor: kPurpulColor,
                       child: FittedBox(
                         child: Text(
-                          '\$${listTransactions[index].amount.toStringAsFixed(2)}',
+                          '\h: ${listTransactions[index].amount.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -84,7 +72,7 @@ class TransactionList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            listTransactions[index].month,
+                            listTransactions[index].date.toString(),
                             style: TextStyle(
                               color: kPurpulColor,
                             ),
@@ -92,7 +80,7 @@ class TransactionList extends StatelessWidget {
                         ]),
                     trailing: IconButton(
                         onPressed: () =>
-                            lfDeleteTransaction(listTransactions[index].id),
+                            deleteTransaction(listTransactions[index].id),
                         icon: Icon(
                           Icons.auto_delete,
                           color: kPurpulColor,

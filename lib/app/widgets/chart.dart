@@ -7,7 +7,6 @@ import 'package:flutter_complete_guide/const/const.dart';
 class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    /* var controller = Get.find<HomeController>(); */
     return Card(
       elevation: 6,
       margin: kMainMargin,
@@ -20,11 +19,11 @@ class Chart extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: builderController.listOfCharts.sublist(0, 5),
+                  children: builderController.getListOfCharts.sublist(0, 6),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: builderController.listOfCharts.sublist(6, 11),
+                  children: builderController.getListOfCharts.sublist(6, 12),
                 ),
               ],
             );

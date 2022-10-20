@@ -16,6 +16,7 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    /* print('spend amount: $spendedamount'); */
     return LayoutBuilder(
       builder: (context, constrains) {
         double width = constrains.maxWidth;
@@ -23,7 +24,7 @@ class ChartBar extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '\H ${spendedamount.toStringAsFixed(0)}',
+                '\H ${spendedamount.toStringAsFixed(1)}',
                 style: TextStyle(color: kMainColor),
               ),
             ),

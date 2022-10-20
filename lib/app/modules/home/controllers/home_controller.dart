@@ -12,14 +12,14 @@ class HomeController extends GetxController {
   final TextEditingController textControllerhouersToUse =
       TextEditingController();
 
-  int houerToUse = 10;
+  double houerToUse = 10.0;
   void changeHoursToUse() {
-    houerToUse = int.parse(textControllerhouersToUse.text);
+    houerToUse = double.parse(textControllerhouersToUse.text);
   }
 
-  final List<Transaction> listTransactions = [
-    Transaction(amount: 2, month: 'Jan', id: 't1', title: 'shoes'),
-    Transaction(amount: 2, month: 'Mar', id: 't2', title: 'golf')
+  final List<Transaction> listofRehabilitation = [
+    Transaction(amount: 2, date: DateTime.now(), id: 't1', title: 'shoes'),
+    Transaction(amount: 2, date: DateTime.parse('1969-08-20 20:18:04Z'), id: 't2', title: 'golf')
   ];
 
   var monthSelected = 'Jan';
@@ -38,21 +38,6 @@ class HomeController extends GetxController {
     'Dec'
   ];
 
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
   Future showBottomSheetNewTransaction() {
     return Get.bottomSheet(NewTransaction());
   }
@@ -61,55 +46,52 @@ class HomeController extends GetxController {
     return Get.bottomSheet(NewAvailableTimeSheet());
   }
 
-  void addTransaction(Transaction transaction) {
-    listTransactions.add(transaction);
-  }
-
-  List<Map<String, dynamic>> get grupedTransactionValues {
-    return mounthList.map((e) {
-      double houersSpent = 0;
-      listTransactions.forEach((element) {
-        if (e == element.month) {
-          houersSpent += element.amount;
+  List<Map<String, dynamic>> getChartBarValues() {
+    List<Map<String, dynamic>> chartBarValues = [];
+    for (var i = 0; i < mounthList.length; i++) {
+      double hoursSpent = 0;
+      listofRehabilitation.forEach((element) {
+        if (element.date.month + 1 == i) {
+          hoursSpent += element.amount;
         }
       });
-      return {'mounth': e, 'houers_spent': houersSpent};
-    }).toList();
+      chartBarValues.add({'mounth': mounthList[i], 'houers_spent': hoursSpent});
+    }
+    return chartBarValues;
   }
 
   /*creating the list of widgets chart*/
-  List<Widget> get listOfCharts {
+  List<Widget> get getListOfCharts {
     List<Widget> barList = [];
-    if (grupedTransactionValues.isNotEmpty) {
-      int lenght = grupedTransactionValues.length;
-      for (int i = 0; i < lenght; i++) {
-        barList.add(Flexible(
-          fit: FlexFit.tight,
-          child: ChartBar(
-              lable: grupedTransactionValues[i]['mounth'].toString(),
-              spendedamount: double.parse(
-                  grupedTransactionValues[i]['houers_spent'].toString()),
-              totalSpendedamount: 4 //TODO total spending,
-              ),
-        ));
-      }
-    } else {
-      listOfCharts.add(ChartBar(
-          lable: 'there is no transaction',
-          spendedamount: 0,
-          totalSpendedamount: 0));
+    var rehabilitationSpentHouerList = getChartBarValues();
+
+    int lenght = rehabilitationSpentHouerList.length;
+    for (int i = 0; i < lenght; i++) {
+      print('$i : ${rehabilitationSpentHouerList[i]['houers_spent']}');
+
+      barList.add(Flexible(
+        fit: FlexFit.tight,
+        child: ChartBar(
+            lable: rehabilitationSpentHouerList[i]['mounth'].toString(),
+            spendedamount: rehabilitationSpentHouerList[i]['houers_spent'],
+            totalSpendedamount: houerToUse //TODO total spending,
+            ),
+      ));
     }
+
     return barList;
   }
 
   void addNewTransaction() {
-    listTransactions.add(
+    var hourSpent = double.parse(textControllerAmount.text);
+    listofRehabilitation.add(
       Transaction(
-          amount: double.parse(textControllerAmount.text),
+          amount: hourSpent,
           title: textControllertitle.text,
-          month: monthSelected,
-          id: 'index${listTransactions.length}'),
+          date: DateTime.now(),
+          id: 'index${listofRehabilitation.length}'),
     );
+    houerToUse -= hourSpent;
     update();
     Get.back();
   }

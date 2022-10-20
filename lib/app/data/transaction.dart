@@ -2,10 +2,10 @@ class Transaction {
   final String id;
   final String title;
   final double amount;
-  final String month;
+  final DateTime date;
   const Transaction({
     required this.amount,
-    required this.month,
+    required this.date,
     required this.id,
     required this.title,
   });

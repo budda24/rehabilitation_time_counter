@@ -62,8 +62,8 @@ class HomeView extends GetView<HomeController> {
               Chart(),
               GetBuilder<HomeController>(builder: (builderController) {
                 return TransactionList(
-                  lfDeleteTransaction: () {/*TODO delete transaction */},
-                  listTransactions: builderController.listTransactions,
+                  deleteTransaction: () {/*TODO delete transaction */},
+                  listTransactions: builderController.listofRehabilitation,
                 );
               }),
             ],
