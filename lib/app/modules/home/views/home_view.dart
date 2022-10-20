@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
 import '../../../../const/const.dart';
 import '../../../widgets/IconPlusButton.dart';
+import '../../../widgets/chart.dart';
 import '../../../widgets/transaction_list.dart';
 import '../controllers/home_controller.dart';
 
@@ -11,17 +13,22 @@ class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    MediaQueryData mediaQuery = MediaQuery.of(context);
-    double width = mediaQuery.size.width;
-    double height = mediaQuery.size.height;
-    /*for rendering difrent dependent on orientation*/
-    bool isLandscape = mediaQuery.orientation == Orientation.landscape;
-
     return Container(
       decoration: kBoxLinearGradient,
       child: Scaffold(
         appBar: AppBar(
           flexibleSpace: Container(decoration: kBoxLinearGradient),
+          actions: [
+            Container(
+              margin: EdgeInsets.only(right: 0.0342.sw),
+              child: IconPlusButton(
+                callBack: () {
+                  controller.showBottomSheetNewhouers();
+                },
+                iconSize: 0.0256.sh,
+              ),
+            )
+          ],
           title: Center(
             child: Text(
               'Expenses Counter',
@@ -36,23 +43,37 @@ class HomeView extends GetView<HomeController> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              //chartOn?
-              /* ? Chart(
-                      listOfTransactionl: []/* list of transaction */,
-                    )
-                  : */
-              TransactionList(
-                lfDeleteTransaction: () {/*TODO delete transaction */},
-                listTransactions: [],
+              Card(
+                elevation: 6,
+                margin: kMainMargin,
+                color: kPurpulColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: GetBuilder<HomeController>(
+                    builder: (builderController) {
+                      return Text(
+                        'hours left : ${builderController.houerToUse.toString()}',
+                        style: TextStyle(color: kMainColor),
+                      );
+                    },
+                  ),
+                ),
               ),
+              Chart(),
+              GetBuilder<HomeController>(builder: (builderController) {
+                return TransactionList(
+                  lfDeleteTransaction: () {/*TODO delete transaction */},
+                  listTransactions: builderController.listTransactions,
+                );
+              }),
             ],
           ),
         ),
         floatingActionButton: Container(
-          margin: EdgeInsets.only(bottom: height * 0.0256),
+          margin: EdgeInsets.only(bottom: 0.0256.sh),
           child: IconPlusButton(
-            callBack: () => {} /* startAddNewTransaction(context) */,
-            iconSize: height * 0.0384,
+            callBack: () => {controller.showBottomSheetNewTransaction()},
+            iconSize: 0.0384.sh,
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

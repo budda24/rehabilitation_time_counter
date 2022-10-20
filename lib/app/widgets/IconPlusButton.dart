@@ -11,11 +11,11 @@ class IconPlusButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       radius: iconSize,
-      backgroundColor: kGreColor,
+      backgroundColor: kPurpulColor,
       child: IconButton(
         color: kMainColor,
         iconSize: iconSize,
-        onPressed:callBack,
+        onPressed: callBack,
         icon: Icon(
           Icons.add,
         ),

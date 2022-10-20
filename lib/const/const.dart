@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 
 const kMainColor = Color(0xffD5ECC2);
-const kGreColor = Color(0xff916BBF);
+const kPurpulColor = Color(0xff916BBF);
 const kBlackColor = Colors.black;
 final kMainColorShade = Colors.lightGreenAccent.shade700;
 const kWhiteColor = Colors.white;
 
 const kTextTitle = TextStyle(fontSize: 20, fontWeight: FontWeight.bold);
 const kTextinformation = TextStyle(fontSize: 10);
-
 
 const kMainMargin = EdgeInsets.symmetric(vertical: 10, horizontal: 20);
 
@@ -21,7 +20,8 @@ const kBoxLinearGradient = BoxDecoration(
       begin: const FractionalOffset(0.0, 0.0),
       end: const FractionalOffset(1.0, 0.0),
       stops: [0.0, 1.0],
-      tileMode: TileMode.clamp),);
+      tileMode: TileMode.clamp),
+);
 
 /*
 Angela chat */
@@ -43,22 +43,19 @@ const kMessageContainerDecoration = BoxDecoration(
   ),
 );
 
-final kInputDecoration =InputDecoration(
+final kInputDecoration = InputDecoration(
   hintText: 'Enter your email',
   hintStyle: TextStyle(color: Colors.black.withOpacity(0.6)),
-  contentPadding:
-  EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide:
-    BorderSide(color: Colors.lightBlueAccent, width: 1.0),
+    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 1.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide:
-    BorderSide(color: Colors.lightBlueAccent, width: 2.0),
+    borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2.0),
     borderRadius: BorderRadius.all(Radius.circular(32.0)),
   ),
 );

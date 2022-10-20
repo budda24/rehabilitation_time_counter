@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/const/const.dart';
 
-import 'package:intl/intl.dart';
-
 import '../data/transaction.dart';
 
 class TransactionList extends StatelessWidget {
@@ -33,7 +31,7 @@ class TransactionList extends StatelessWidget {
               child: Column(
                 children: [
                   Card(
-                    color: kGreColor,
+                    color: kPurpulColor,
                     child: Text(
                       'You don\'t have expenses yet :)',
                       style: kTextTitle,
@@ -60,7 +58,7 @@ class TransactionList extends StatelessWidget {
                   child: ListTile(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
-                        side: BorderSide(width: 3, color: kGreColor)),
+                        side: BorderSide(width: 3, color: kPurpulColor)),
                     leading: CircleAvatar(
                       radius: 50,
                       backgroundColor: randomColors[index],
@@ -80,16 +78,15 @@ class TransactionList extends StatelessWidget {
                       style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
-                          color: kGreColor),
+                          color: kPurpulColor),
                     ),
                     subtitle: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat.yMMMd()
-                                .format(listTransactions[index].date),
+                            listTransactions[index].month,
                             style: TextStyle(
-                              color: kGreColor,
+                              color: kPurpulColor,
                             ),
                           ),
                         ]),
@@ -98,49 +95,12 @@ class TransactionList extends StatelessWidget {
                             lfDeleteTransaction(listTransactions[index].id),
                         icon: Icon(
                           Icons.auto_delete,
-                          color: kGreColor,
+                          color: kPurpulColor,
                         )),
                   ),
                 );
               },
             ),
-    );
-  }
-}
-
-class ggggg extends StatelessWidget {
-  ggggg({Key? key}) : super(key: key);
-
-  static final List<Transaction> listTransactions = [
-    Transaction(amount: 155.00, date: DateTime.now(), id: 't1', title: 'shoes'),
-    Transaction(amount: 122, date: DateTime.now(), id: 't2', title: 'golf')
-  ];
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: listTransactions.length,
-/*ctx = context*/
-      itemBuilder: (ctx, index) {
-        return Card(
-          color: kGreColor,
-          child: Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    DateFormat.yMMMd().format(listTransactions[index].date),
-                    style: TextStyle(
-                      color: kGreColor,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

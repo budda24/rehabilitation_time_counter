@@ -8,14 +8,11 @@ class ChartBar extends StatelessWidget {
     required this.lable,
     required this.spendedamount,
     required this.totalSpendedamount,
-    /*required this.dateTime,*/
   }) : super(key: key);
 
   final String lable;
   final double spendedamount;
   final double totalSpendedamount;
-
-  /*final DateTime dateTime;*/
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +23,7 @@ class ChartBar extends StatelessWidget {
           children: [
             Container(
               child: Text(
-                '\$${spendedamount.toStringAsFixed(0)}',
+                '\H ${spendedamount.toStringAsFixed(0)}',
                 style: TextStyle(color: kMainColor),
               ),
             ),
@@ -35,13 +32,13 @@ class ChartBar extends StatelessWidget {
             ),
             Container(
               height: 60,
-              width: width*0.500,
+              width: width * 0.500,
               child: Stack(
                 children: [
                   Container(
                     decoration: BoxDecoration(
                       color: kMainColor,
-                      border: Border.all(color: kGreColor, width: 1),
+                      border: Border.all(color: kPurpulColor, width: 1),
                     ),
                   ),
                   /*to reverse FractionalBox to from top ti bottom you have to use Algin*/
@@ -50,10 +47,10 @@ class ChartBar extends StatelessWidget {
                     child: FractionallySizedBox(
                       heightFactor: totalSpendedamount == 0
                           ? 0.0
-                      /*to get the procentage of total*/
+                          /*to get the procentage of total*/
                           : spendedamount / totalSpendedamount,
                       child: Container(
-                        color: kGreColor.withGreen(1),
+                        color: kPurpulColor.withGreen(1),
                       ),
                     ),
                   ),
