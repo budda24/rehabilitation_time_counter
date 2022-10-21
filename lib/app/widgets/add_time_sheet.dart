@@ -42,7 +42,7 @@ class NewAvailableTimeSheet extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () {
-                  
+                  homeController.changeHoursToUse();
                 },
                 child: Text(
                   'Add Time',

@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "904295600049",
-    "project_id": "expensescounter-f3fd6",
-    "storage_bucket": "expensescounter-f3fd6.appspot.com"
+    "project_number": "70663907314",
+    "project_id": "rehabilitation-32c56",
+    "storage_bucket": "rehabilitation-32c56.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:904295600049:android:2327c2e533b68c649eb790",
+        "mobilesdk_app_id": "1:70663907314:android:bfb7ec1a0cd3aed1e2ed6b",
         "android_client_info": {
           "package_name": "com.franek.expenses_counter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "904295600049-mcgk2itfe3j7tl5qltu6e996fvmv711k.apps.googleusercontent.com",
+          "client_id": "70663907314-5knfn0mpr80j4hstl1vlllvbvqkv4hm9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.franek.expenses_counter",
+            "certificate_hash": "bd94261c4139e8fbf296949b63f1a98086d8b60b"
+          }
+        },
+        {
+          "client_id": "70663907314-8vsi9t9gf15cpes11cr3akctpfmj85gn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCczoA4rPEXL-PQeA_E881r48fiZWk_emc"
+          "current_key": "AIzaSyD-GfnA-cDtFaAiFI8hlM_0w2GPXOO7lLU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "904295600049-mcgk2itfe3j7tl5qltu6e996fvmv711k.apps.googleusercontent.com",
+              "client_id": "70663907314-8vsi9t9gf15cpes11cr3akctpfmj85gn.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

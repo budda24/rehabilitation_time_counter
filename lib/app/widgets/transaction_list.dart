@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_complete_guide/const/const.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../data/transaction.dart';
+import 'package:intl/intl.dart';
+import '../data/rehabilitation.dart';
 
 class TransactionList extends StatelessWidget {
   TransactionList(
       {required this.listTransactions, required this.deleteTransaction});
 
-  final List<Transaction> listTransactions;
-  final Function deleteTransaction;
+  final List<Rehabilitation> listTransactions;
+  final Function(Rehabilitation) deleteTransaction;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       /*ListView.builder needs parent with constrain height*/
-      height: 0.5.sh,
+      padding: EdgeInsets.only(bottom: 20.h),
+      height: 0.7.sh,
       child: listTransactions.isEmpty
           ? Center(
               child: Column(
@@ -40,6 +41,8 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemCount: listTransactions.length,
               itemBuilder: (ctx, index) {
+                var date = DateFormat('yyyy-MM-dd')
+                    .format(listTransactions[index].date);
                 return Container(
                   margin: EdgeInsets.symmetric(
                       horizontal: 0.0409.sh, vertical: 0.0128.sw),
@@ -52,7 +55,7 @@ class TransactionList extends StatelessWidget {
                       backgroundColor: kPurpulColor,
                       child: FittedBox(
                         child: Text(
-                          '\h: ${listTransactions[index].amount.toStringAsFixed(2)}',
+                          '\h: ${listTransactions[index].hourSpent.toStringAsFixed(2)}',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 15,
@@ -72,15 +75,16 @@ class TransactionList extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            listTransactions[index].date.toString(),
+                            date,
                             style: TextStyle(
                               color: kPurpulColor,
+                              fontSize: 20
                             ),
                           ),
                         ]),
                     trailing: IconButton(
                         onPressed: () =>
-                            deleteTransaction(listTransactions[index].id),
+                            deleteTransaction(listTransactions[index]),
                         icon: Icon(
                           Icons.auto_delete,
                           color: kPurpulColor,

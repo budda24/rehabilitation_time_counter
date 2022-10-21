@@ -64,7 +64,7 @@ class NewTransaction extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              GetBuilder<HomeController>(
+              /* GetBuilder<HomeController>(
                 builder: (controller) => DropdownButton(
                   hint: Text(
                     'Mounth',
@@ -90,18 +90,18 @@ class NewTransaction extends StatelessWidget {
                     );
                   }).toList(),
                 ),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [],
-              ),
+              ), */
+              IconButton(
+                  /*alignment: Alignment.centerRight,*/
+                  onPressed: () => homeController.selectDate(context),
+                  icon: Icon(Icons.calendar_today)),
               SizedBox(
                 height: 0.0204.sh,
               ),
               TextButton(
                 onPressed: () {
                   print('add transaction');
-                  homeController.addNewTransaction();
+                  homeController.addNewRehabilitation();
                 },
                 child: Text(
                   'Add Rehabilitation',

@@ -2,27 +2,27 @@ name: flutter_complete_guide
 version: 1.0.0+1
 publish_to: none
 description: A new Flutter project.
-environment: 
+environment:
   sdk: '>=2.13.0 <3.0.0'
 
-dependencies: 
+dependencies:
   intl: ^0.17.0
-  firebase_auth: ^3.3.5
   cloud_firestore: any
   firebase_core: any
   modal_progress_hud_nsn: ^0.1.0-nullsafety-1
   cupertino_icons: ^1.0.2
   get: 4.6.5
-  flutter: 
+  flutter:
     sdk: flutter
   flutter_screenutil: ^5.5.4
+  get_storage: ^2.0.3
 
-dev_dependencies: 
-  flutter_test: 
+dev_dependencies:
+  flutter_test:
     sdk: flutter
 
-flutter: 
-  assets: 
+flutter:
+  assets:
     - assets/images/
   uses-material-design: true
 

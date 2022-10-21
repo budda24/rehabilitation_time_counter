@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 import '../../../../const/const.dart';
 import '../../../widgets/IconPlusButton.dart';
-import '../../../widgets/chart.dart';
+
 import '../../../widgets/transaction_list.dart';
 import '../controllers/home_controller.dart';
 
@@ -31,7 +31,7 @@ class HomeView extends GetView<HomeController> {
           ],
           title: Center(
             child: Text(
-              'Expenses Counter',
+              'Rehabilitation Counter',
               style: TextStyle(
                 color: Colors.black,
               ),
@@ -59,10 +59,10 @@ class HomeView extends GetView<HomeController> {
                   ),
                 ),
               ),
-              Chart(),
               GetBuilder<HomeController>(builder: (builderController) {
+                builderController.sortRehabilitation();
                 return TransactionList(
-                  deleteTransaction: () {/*TODO delete transaction */},
+                  deleteTransaction: builderController.deleteRehabilitation,
                   listTransactions: builderController.listofRehabilitation,
                 );
               }),

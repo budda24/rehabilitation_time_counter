@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../../data/transaction.dart';
+import '../../../data/rehabilitation.dart';
+import '../../../services/db_services.dart';
 import '../../../widgets/add_time_sheet.dart';
-import '../../../widgets/chart_bar.dart';
 import '../../../widgets/add_rehabilitation_sheet.dart';
 
 class HomeController extends GetxController {
@@ -12,31 +12,23 @@ class HomeController extends GetxController {
   final TextEditingController textControllerhouersToUse =
       TextEditingController();
 
-  double houerToUse = 10.0;
-  void changeHoursToUse() {
-    houerToUse = double.parse(textControllerhouersToUse.text);
+  var dataBase = FirebaseDB();
+
+  List<Rehabilitation> listofRehabilitation = [
+    Rehabilitation(
+        hourSpent: 2, date: DateTime.now(), id: 't1', title: 'shoes'),
+    Rehabilitation(
+        hourSpent: 2,
+        date: DateTime.parse('1969-08-20 20:18:04Z'),
+        id: 't2',
+        title: 'golf')
+  ];
+
+  sortRehabilitation() {
+    listofRehabilitation.sort((a, b) {
+      return b.date.compareTo(a.date);
+    });
   }
-
-  final List<Transaction> listofRehabilitation = [
-    Transaction(amount: 2, date: DateTime.now(), id: 't1', title: 'shoes'),
-    Transaction(amount: 2, date: DateTime.parse('1969-08-20 20:18:04Z'), id: 't2', title: 'golf')
-  ];
-
-  var monthSelected = 'Jan';
-  final List<String> mounthList = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ];
 
   Future showBottomSheetNewTransaction() {
     return Get.bottomSheet(NewTransaction());
@@ -46,53 +38,82 @@ class HomeController extends GetxController {
     return Get.bottomSheet(NewAvailableTimeSheet());
   }
 
-  List<Map<String, dynamic>> getChartBarValues() {
-    List<Map<String, dynamic>> chartBarValues = [];
-    for (var i = 0; i < mounthList.length; i++) {
-      double hoursSpent = 0;
-      listofRehabilitation.forEach((element) {
-        if (element.date.month + 1 == i) {
-          hoursSpent += element.amount;
-        }
-      });
-      chartBarValues.add({'mounth': mounthList[i], 'houers_spent': hoursSpent});
-    }
-    return chartBarValues;
+  double houerToUse = 10.0;
+  void changeHoursToUse() {
+    houerToUse = double.parse(textControllerhouersToUse.text);
+    update();
+    /* saveHoursToUseToStorage(); */
+    Get.back();
   }
 
-  /*creating the list of widgets chart*/
-  List<Widget> get getListOfCharts {
-    List<Widget> barList = [];
-    var rehabilitationSpentHouerList = getChartBarValues();
+  /* saveHoursToUseToStorage() {
+    storage.write('hours_left', houerToUse);
+  } */
 
-    int lenght = rehabilitationSpentHouerList.length;
-    for (int i = 0; i < lenght; i++) {
-      print('$i : ${rehabilitationSpentHouerList[i]['houers_spent']}');
+  DateTime? chosenDate;
+  Future<void> selectDate(BuildContext context) async {
+    chosenDate = DateTime.now();
 
-      barList.add(Flexible(
-        fit: FlexFit.tight,
-        child: ChartBar(
-            lable: rehabilitationSpentHouerList[i]['mounth'].toString(),
-            spendedamount: rehabilitationSpentHouerList[i]['houers_spent'],
-            totalSpendedamount: houerToUse //TODO total spending,
-            ),
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now().subtract(Duration(days: 365)),
+      lastDate: DateTime.now().add(Duration(days: 30)),
+    );
+    if (pickedDate != null && pickedDate != chosenDate) {
+      chosenDate = pickedDate;
+      update();
+    }
+  }
+
+  void addNewRehabilitation() async {
+    if (chosenDate == null || textControllerAmount.text.isEmpty) {
+      var snackBar = Get.showSnackbar(GetSnackBar(
+        message: 'value not chosen',
       ));
+      await Future.delayed(Duration(seconds: 2));
+      snackBar.close();
+
+      return;
     }
-
-    return barList;
-  }
-
-  void addNewTransaction() {
     var hourSpent = double.parse(textControllerAmount.text);
-    listofRehabilitation.add(
-      Transaction(
-          amount: hourSpent,
-          title: textControllertitle.text,
-          date: DateTime.now(),
-          id: 'index${listofRehabilitation.length}'),
+    var rehabilitation = Rehabilitation(
+        hourSpent: hourSpent,
+        title: textControllertitle.text,
+        date: chosenDate!,
+        id: 'index${listofRehabilitation.length}');
+    listofRehabilitation.insert(
+      0,
+      rehabilitation,
     );
     houerToUse -= hourSpent;
+    await dataBase.saveRehabilitation(rehabilitation);
     update();
+
     Get.back();
+  }
+
+  deleteRehabilitation(Rehabilitation rehabilitation) {
+    listofRehabilitation
+        .removeWhere((element) => element.id == rehabilitation.id);
+    houerToUse += rehabilitation.hourSpent;
+
+    update();
+  }
+
+/*   var storage = GetStorage();
+  saveRehabilitationToStorage() {
+    var rebilitationMap = listofRehabilitation.map((e) => e.toJson()).toList();
+    print(rebilitationMap);
+    storage.write('rehabilitation', rebilitationMap);
+  } */
+
+  @override
+  void onInit() {
+    /* var rehabilitationStorage = (storage.read('rehabilitation')) as List; */
+    /* listofRehabilitation =
+        rehabilitationStorage.map((e) => Rehabilitation.fromJson(e)).toList(); */
+
+    super.onInit();
   }
 }
