@@ -16,11 +16,25 @@ class FirebaseDB {
   }
 
   Future<void> saveRehabilitation(Rehabilitation rehabilitation) async {
-    await db.collection('rehabilitation').add(rehabilitation.toJson());
+    await db
+        .collection('rehabilitation')
+        .doc(rehabilitation.id)
+        .set(rehabilitation.toJson());
   }
 
-  deleteRehabilitation() async {
-    var rehabilitationSnapshot = await getRehabilitation();
+  deleteRehabilitation(Rehabilitation rehabilitation) async {
+    await db.collection('rehabilitation').doc(rehabilitation.id).delete();
+  }
 
+  Future<double> getHourSpent() async {
+    var snapshot = await db.collection('time').doc('spent_hour').get();
+    if (snapshot.exists) {
+      return snapshot.data()!['hour_left'];
+    }
+    return 0.0;
+  }
+
+  updateHourSpent(double hourLeft) async {
+    await db.collection('time').doc('spent_hour').set({'hour_left': hourLeft});
   }
 }

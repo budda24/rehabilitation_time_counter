@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../data/rehabilitation.dart';
 import '../../../services/db_services.dart';
@@ -13,16 +14,9 @@ class HomeController extends GetxController {
       TextEditingController();
 
   var dataBase = FirebaseDB();
+  var uuid = Uuid();
 
-  List<Rehabilitation> listofRehabilitation = [
-    Rehabilitation(
-        hourSpent: 2, date: DateTime.now(), id: 't1', title: 'shoes'),
-    Rehabilitation(
-        hourSpent: 2,
-        date: DateTime.parse('1969-08-20 20:18:04Z'),
-        id: 't2',
-        title: 'golf')
-  ];
+  List<Rehabilitation> listofRehabilitation = [];
 
   sortRehabilitation() {
     listofRehabilitation.sort((a, b) {
@@ -39,8 +33,10 @@ class HomeController extends GetxController {
   }
 
   double houerToUse = 10.0;
-  void changeHoursToUse() {
-    houerToUse = double.parse(textControllerhouersToUse.text);
+  void changeHoursToUse() async {
+    var newHours = double.parse(textControllerhouersToUse.text);
+    houerToUse = newHours;
+    await dataBase.updateHourSpent(newHours);
     update();
     /* saveHoursToUseToStorage(); */
     Get.back();
@@ -81,7 +77,7 @@ class HomeController extends GetxController {
         hourSpent: hourSpent,
         title: textControllertitle.text,
         date: chosenDate!,
-        id: 'index${listofRehabilitation.length}');
+        id: uuid.v4());
     listofRehabilitation.insert(
       0,
       rehabilitation,
@@ -93,10 +89,12 @@ class HomeController extends GetxController {
     Get.back();
   }
 
-  deleteRehabilitation(Rehabilitation rehabilitation) {
+  deleteRehabilitation(Rehabilitation rehabilitation) async {
     listofRehabilitation
         .removeWhere((element) => element.id == rehabilitation.id);
     houerToUse += rehabilitation.hourSpent;
+
+    await dataBase.deleteRehabilitation(rehabilitation);
 
     update();
   }
@@ -109,8 +107,11 @@ class HomeController extends GetxController {
   } */
 
   @override
-  void onInit() {
-    /* var rehabilitationStorage = (storage.read('rehabilitation')) as List; */
+  void onInit() async {
+    houerToUse = await dataBase.getHourSpent();
+    listofRehabilitation = await dataBase.getRehabilitation();
+
+    update();
     /* listofRehabilitation =
         rehabilitationStorage.map((e) => Rehabilitation.fromJson(e)).toList(); */
 

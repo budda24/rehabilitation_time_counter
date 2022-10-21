@@ -11,13 +11,13 @@ String rehabilitationToJson(Rehabilitation data) => json.encode(data.toJson());
 
 class Rehabilitation {
   Rehabilitation({
-    required this.id,
+     this.id,
     required this.title,
     required this.date,
     required this.hourSpent,
   });
 
-  final String id;
+   String? id;
   final String title;
   final DateTime date;
   final double hourSpent;
